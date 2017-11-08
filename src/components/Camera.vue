@@ -39,12 +39,15 @@
                 rotateAngle: 90,
             }
         },
+        watch: {
+            rotateAngle(newVal) {
+                this.turnCamera(newVal)
+            }
+        },
+        mounted() {},
         methods: {
-            turnLeft() {
-                this.$socket.emit('turnLeft')
-            },
-            turnRight() {
-                this.$socket.emit('turnRight')
+            turnCamera(arg) {
+                this.$socket.emit('turnCamera',arg)
             }
         },
         sockets: {
@@ -52,7 +55,7 @@
                 console.log('ah')
             }
         },
-        mounted() {}
+        
     }
 </script>
 <style>

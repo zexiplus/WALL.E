@@ -51,11 +51,8 @@ if(process.argv.indexOf('ras') > -1) {
         led.off()
         console.log('off')
       })
-      client.on('turnLeft',function() {
-	servo.to(180)
-      })
-      client.on('turnRight',function() {
-	servo.to(0)
+      client.on('turnCamera',function(arg) {
+	       servo.to(arg)
       })
     })
   })
