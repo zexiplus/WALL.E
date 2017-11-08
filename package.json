@@ -1,12 +1,13 @@
 {
-  "name": "wall.e",
+  "name": "WALL.E",
   "version": "1.0.0",
   "description": "A hardware/software project can control io-device",
   "author": "zexiplus <zexiplus@outlook.com>",
   "private": true,
   "scripts": {
+    "pi": "sudo node build/dev-server.js ras",
     "dev": "node build/dev-server.js",
-    "start": "node build/dev-server.js",
+    "start": "sudo node build/dev-server.js ras",
     "build": "node build/build.js",
     "camera": "/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/input_uvc.so -d /dev/video0 -n -y -f 25 -r 640x480' -o '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/output_http.so -n -w /usr/local/www'"
   },
