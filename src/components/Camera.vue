@@ -3,22 +3,21 @@
         <el-row :gutter="50">
             <el-col :span="16">
                 <el-card>
-                    <div slot="header" class="textAlign">
-                        <span>摄像机</span>
-                    </div>
+                    <h1 slot="header" class="textAlign">
+                        摄像机
+                    </h1>
                     <el-row>
-                        <el-col :span="24">
+                        <el-col :span="24" class="cameraAlign">
                             <iframe :src="url" id="camera"></iframe>
                         </el-col>
                     </el-row>
-                    
                 </el-card>                
             </el-col>
             <el-col :span="6">
                 <el-card>
-                    <div slot="header" class="textAlign">
-                        <span>旋转相机</span>
-                    </div>
+                    <h1 slot="header" class="textAlign">
+                        旋转相机
+                    </h1>
                     <el-row>
                         <el-col :span="24">
                             <el-slider v-model="rotateAngle" :min="0" :max="180"></el-slider>
@@ -63,6 +62,9 @@
         width: 640px;
         height: 480px;
         border: 0;
+    }
+    .cameraAlign {
+        text-align: center;
     }
     .textAlign {
         text-align: center;

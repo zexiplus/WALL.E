@@ -11,11 +11,11 @@
               text-color="#fff"
               active-text-color="#ffd04b"
               :router="true">
-              <el-menu-item index="1">
+              <el-menu-item index="description">
                 <i class="el-icon-document"></i>
                 <span >介绍</span>
               </el-menu-item>    
-              <el-menu-item index="2">
+              <el-menu-item index="collection">
                 <i class="el-icon-more"></i>
                 <span >集合</span>
               </el-menu-item>                        
@@ -27,13 +27,13 @@
                   <el-menu-item index="led">LED灯</el-menu-item>
                   <el-menu-item index="camera">摄像机</el-menu-item>
                   <el-menu-item index="thermometer">温度计</el-menu-item>
-                  <el-menu-item index="">测距仪</el-menu-item>
+                  <el-menu-item index="proximity">测距仪</el-menu-item>
                   <el-menu-item index="gps">gps定位</el-menu-item>
-                  <el-menu-item index="control">遥控电机</el-menu-item>
+                  <el-menu-item index="control">方向遥控</el-menu-item>
               </el-submenu>
-              <el-menu-item index="4">
+              <el-menu-item index="settings">
                 <i class="el-icon-setting"></i>
-                <span >设置</span>
+                <span>设置</span>
               </el-menu-item>
               
             </el-menu>
@@ -41,7 +41,11 @@
          </el-row>
        </el-aside>
        <el-container>
-        <el-header height="5vh"></el-header>
+        <el-header height="5vh">
+          <el-breadcrumb separator="/">
+            
+          </el-breadcrumb>
+        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
