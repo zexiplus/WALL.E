@@ -27,6 +27,7 @@ module.exports = {
       '@a': resolve('src/assets'),
       '@s': resolve('src/store'),
       '@u': resolve('src/util'),
+      '@p': resolve('src/plugins'),
       '&c': resolve('src/config')
     }
   },

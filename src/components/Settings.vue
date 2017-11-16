@@ -91,7 +91,7 @@
                     <h1 slot="header">socket信道连接</h1>
                     <el-row>
                         <el-col :span="16" :push="4">
-                            <el-input v-model="socketChanal"></el-input>
+                            <el-input v-model="rasSocketIp"></el-input>
                         </el-col>
                         <el-col :span="20">
                             <div class="btnWrapper">
@@ -106,6 +106,7 @@
     </div>
 </template>
 <script>
+    import {mapState} from 'vuex'
     export default {
         name: 'settings',
         watch: {
@@ -113,9 +114,11 @@
                 this.allSwitch = this.ledSwitch = this.cameraSwitch = this.thermometerSwitch = this.proximitySwitch = this.gpsSwitch = this.remoteControlSwitch = this.redRaySwitch = val;
             }
         },
+        computed: {
+            ...mapState(['rasSocketIp'])
+        },
         data() {
             return {
-                socketChanal: '192.168.17.149:3000',
                 allSwitch: true,
                 ledSwitch: true,
                 cameraSwitch: true,

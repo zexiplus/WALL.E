@@ -12,6 +12,7 @@
     "camera": "/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/input_uvc.so -d /dev/video0 -n -y -f 25 -r 640x480' -o '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/output_http.so -n -w /usr/local/www'"
   },
   "dependencies": {
+    "chart.js": "^2.7.1",
     "css-loader": "^0.28.7",
     "element-ui": "^2.0.3",
     "eventsource-polyfill": "^0.9.6",

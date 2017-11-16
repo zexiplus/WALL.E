@@ -4,14 +4,7 @@ Vue.use(vuex)
 const store = new vuex.Store({
     namespaced: true,
     state: {
-        routerList: [
-            {name: 'home'},
-            {name: 'camera'},
-            {name: 'thermometer'},
-            {name: 'control'},
-            {name: 'accelerometer'},
-            {name: 'led'}
-        ]
+        rasSocketIp: 'http://192.168.17.149:3000'
     },
     mutations: {
 
