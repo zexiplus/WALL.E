@@ -12,7 +12,8 @@ const page = Object.freeze({
     accelerometer: resolve => require(['@c/Accelerometer'],resolve),
     proximity: resolve => require(['@c/Proximity'],resolve),
     settings: resolve => require(['@c/Settings'],resolve),
-    collection: resolve => require(['@c/Collection'],resolve)
+    collection: resolve => require(['@c/Collection'],resolve),
+    gps: resolve=> require(['@c/Gps'],resolve)
 })
 
 export default new Router({
@@ -26,6 +27,7 @@ export default new Router({
     {path:'/control',name:'control',component:page.control},
     {path:'/accelerometer',name:'accelerometer',component:page.accelerometer},
     {path:'/proximity',name:'proximity',component:page.proximity},
+    {path:'/gps',name: 'gps',component: page.gps},
     {path:'/settings',name:'settings',component:page.settings},
     {path:'/collection',name:'collection',component:page.collection},
   ]
