@@ -1,5 +1,5 @@
 <template>
-   <div class="cameraContainer">
+   <div class="controlContainer">
         <el-row :gutter="50">
             <el-col :span="16">
                 <el-card>
@@ -22,32 +22,54 @@
                         </el-col>
                     </el-row>    
                     <el-row>
-                        <el-col :span="4" class="canvasAlign">
-                            <el-form-item label="遥控" label-width="120px">
+                        <el-col :span="4" :offset="2" class="canvasAlign">
+                            <el-form-item label="遥控" label-width="50px">
                                 <el-switch v-model="remoteMode"></el-switch>
                             </el-form-item>
                         </el-col>                        
                         <el-col :span="4" class="canvasAlign">
-                            <el-form-item label="避障" label-width="120px">
+                            <el-form-item label="避障" label-width="50px">
                                 <el-switch v-model="avoidMode"></el-switch>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4" class="canvasAlign">
-                            <el-form-item label="循迹" label-width="120px">
+                            <el-form-item label="循迹" label-width="50px">
                                 <el-switch v-model="trailMode"></el-switch>
                             </el-form-item>
                         </el-col>   
                         <el-col :span="4" class="canvasAlign">
-                            <el-form-item label="旋转" label-width="120px">
+                            <el-form-item label="旋转" label-width="50px">
                                 <el-switch v-model="rotateMode"></el-switch>
                             </el-form-item>
                         </el-col> 
                         <el-col :span="4" class="canvasAlign">
-                            <el-form-item label="倒退" label-width="120px">
+                            <el-form-item label="倒退" label-width="50px">
                                 <el-switch v-model="backMode"></el-switch>
                             </el-form-item>
-                        </el-col>                                                                    
-                    </el-row>                                         
+                        </el-col>                                                                   
+                    </el-row>      
+                    <el-row>
+                        <el-col :span="10" :offset="0">
+                            <div class="box" >
+                                <el-row>
+                                    <el-col :span="4" :offset="11">
+                                        <i ref="forward" class="el-icon-caret-top"></i>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :span="4" :offset="6">
+                                        <i ref="left" class="el-icon-caret-left"></i>
+                                    </el-col>
+                                    <el-col :span="4" :offset="1">
+                                        <i ref="back" class="el-icon-caret-bottom"></i>
+                                    </el-col>
+                                    <el-col :span="4" :offset="1">
+                                        <i ref="right" class="el-icon-caret-right"></i>
+                                    </el-col>                                    
+                                </el-row>
+                            </div>
+                        </el-col>
+                    </el-row>                                   
                     </el-form>
                 </el-card> 
             </el-col>
@@ -58,7 +80,7 @@
                     </h1>
                     <el-row>
                         <el-col :span="24">
-                            <h3></h3>
+                            <div class="currDirection">{{currDirection}}</div>
                         </el-col>
                     </el-row>
                 </el-card>                
@@ -78,35 +100,108 @@
                 trailMode: false,
                 rotateMode: false,
                 backMode: false,
+                currDirection: ''
             }
         },
         watch: {
             remoteMode(val) {
                 if(val) {
-                    this.avoidMode = this.trailMode = this.rotateMode = this.backMode = false;
+                    this.bindControl()
+                    this.avoidMode = this.trailMode = this.rotateMode = this.backMode = false
+                }
+                else {
+                    this.removeControl()
                 }
             },
             avoidMode(val) {
                 if(val) {
-                    this.remoteMode = this.trailMode = this.rotateMode = this.backMode = false;
+                    this.remoteMode = this.trailMode = this.rotateMode = this.backMode = false
                 }                
             },
             trailMode(val) {
                 if(val) {
-                    this.avoidMode = this.remoteMode = this.rotateMode = this.backMode = false;
+                    this.avoidMode = this.remoteMode = this.rotateMode = this.backMode = false
                 }
             },
             rotateMode(val) {
                 if(val) {
-                    this.avoidMode = this.trailMode = this.remoteMode = this.backMode = false;
+                    this.avoidMode = this.trailMode = this.remoteMode = this.backMode = false
                 }
             },
             backMode(val) {
                 if(val) {
-                    this.avoidMode = this.trailMode = this.rotateMode = this.remoteMode = false;
+                    this.avoidMode = this.trailMode = this.rotateMode = this.remoteMode = false
                 }                
             }
-        }
+        },
+        created() {
+            this.bindControl();
+        },
+        methods: {
+            bindControl() {
+                document.addEventListener('keydown',this.captureKeyPress)
+                document.addEventListener('keyup',this.captureKeyUp)                
+            },
+            //解绑键盘事件
+            removeControl() {
+                document.removeEventListener('keydown',this.captureKeyPress)
+                document.removeEventListener('keyup',this.captureKeyPress)
+            },
+            driveMoto(direc) {
+                this.$socket.emit('driveMoto',direc)
+                this.currDirection = direc
+            },
+            stopMoto(direc) {
+                this.$socket.emit('stopMoto',direc)
+                this.currDirection = ''
+            },
+            captureKeyPress(e) {
+                switch(e.keyCode) {
+                    case 37: 
+                    this.setHeighLight('left')
+                    this.driveMoto('left')
+                    break;
+                    case 38:
+                    this.setHeighLight('forward')
+                    this.driveMoto('forward')
+                    break;
+                    case 39:
+                    this.setHeighLight('right')
+                    this.driveMoto('right')
+                    break;
+                    case 40:
+                    this.setHeighLight('back')
+                    this.driveMoto('back')
+                    break;
+                }
+            },
+            captureKeyUp(e) {
+                switch(e.keyCode) {
+                    case 37: 
+                    this.removeHeithLight('left')
+                    this.stopMoto('left')
+                    break;
+                    case 38:
+                    this.removeHeithLight('forward')
+                    this.stopMoto('forward')
+                    break;
+                    case 39:
+                    this.removeHeithLight('right')
+                    this.stopMoto('right')
+                    break;
+                    case 40:
+                    this.removeHeithLight('back')
+                    this.stopMoto('back')
+                    break;
+                }                
+            },
+            setHeighLight(refName) {
+                this.$refs[refName].style.color = '#409EFF'
+            },
+            removeHeithLight(refName) {
+                this.$refs[refName].style.color = '#CFD3DB'
+            }
+        }        
     }
 </script>
 <style scoped>
@@ -115,5 +210,15 @@
     }
     .canvasAlign {
         text-align: center;
+    }
+    .el-icon-caret-top,.el-icon-caret-bottom,.el-icon-caret-left,.el-icon-caret-right {
+        font-size: 4rem;
+        color: #CFD3DB;
+    }
+    .currDirection {
+        text-align: left !important;
+        display: block;
+        padding-left: 2rem;
+        height: 50px;
     }
 </style>

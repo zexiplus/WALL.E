@@ -86,7 +86,7 @@
                         </el-row>                                                                                                 
                 </el-card>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="10">
                 <el-card>
                     <h1 slot="header">socket信道连接</h1>
                     <el-row>

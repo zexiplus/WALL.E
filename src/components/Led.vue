@@ -3,9 +3,9 @@
         <el-row>
             <el-col :span="12">
                 <el-card class="box-card">
-                    <div slot="header" class="textCenter">
-                        <span>led模块</span>
-                    </div>
+                    <h1 slot="header" class="textCenter">
+                        led灯光模块
+                    </h1>
                     <el-row :gutter="30">
                         <el-col :span="8">模块开/关</el-col>
                         <el-col :span="16">
@@ -121,6 +121,5 @@
     }
     .textCenter {
         text-align: center;
-        font-size: 2rem;
     }
 </style>

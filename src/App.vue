@@ -42,9 +42,6 @@
        </el-aside>
        <el-container>
         <el-header height="5vh">
-          <el-breadcrumb separator="/">
-            
-          </el-breadcrumb>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -97,5 +94,6 @@ export default {
     text-align: right;
     line-height: 40px;
     height: 95vh;
+    overflow: hidden;
   }
 </style>

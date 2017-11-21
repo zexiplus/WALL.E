@@ -68,6 +68,5 @@
     }
     .textAlign {
         text-align: center;
-        font-size: 2rem;
     }
 </style>
