@@ -7,7 +7,7 @@ const store = new vuex.Store({
         rasSocketIp: 'http://192.168.17.149:3000'
     },
     mutations: {
-
+        
     },
     actions: {
 

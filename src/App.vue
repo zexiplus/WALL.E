@@ -95,5 +95,9 @@ export default {
     line-height: 40px;
     height: 95vh;
     overflow: hidden;
+    min-width: 900px;
+  }
+  #App {
+    min-width: 1200px;
   }
 </style>
