@@ -8,7 +8,7 @@
                             <el-col :span="8">总开/关</el-col>
                             <el-col :span="16">
                                 <el-switch
-                                  v-model="allSwitch"
+                                  v-model="globalSwitch"
                                   active-color="#13ce66"
                                   inactive-color="#ff4949">
                                 </el-switch>
@@ -115,11 +115,12 @@
             }
         },
         computed: {
-            ...mapState(['rasSocketIp'])
+            ...mapState(['rasSocketIp','globalSwitch','ledSwitch','cameraSwitch',
+                'thermometerSwitch','proximitySwitch','gpsSwitch','remoteControlSwitch','redRaySwitch'])
         },
         data() {
             return {
-                allSwitch: true,
+                globalSwitch: true,
                 ledSwitch: true,
                 cameraSwitch: true,
                 thermometerSwitch: true,

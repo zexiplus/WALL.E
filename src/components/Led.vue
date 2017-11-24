@@ -17,16 +17,6 @@
                         </el-col>
                     </el-row>                    
                     <el-row :gutter="30">
-                        <el-col :span="8">
-                            <span>
-                                闪烁间隔(ms)
-                            </span>
-                        </el-col>
-                        <el-col :span="16">
-                            <el-slider v-model="ledInterval" :max="5000"></el-slider>
-                        </el-col>
-                    </el-row>
-                    <el-row :gutter="30">
                         <el-col :span="8">led 1</el-col>
                         <el-col :span="16">
                             <el-switch
@@ -45,7 +35,47 @@
                               inactive-color="#ff4949">
                             </el-switch>
                         </el-col>
-                    </el-row>                    
+                    </el-row>  
+                    <el-row :gutter="30">
+                        <el-col :span="8">
+                            <span>
+                                led1闪烁间隔
+                            </span>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider v-model="led1Interval" :max="5000"></el-slider>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="30">
+                        <el-col :span="8">
+                            <span>
+                                led2闪烁间隔
+                            </span>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider v-model="led2Interval" :max="5000"></el-slider>
+                        </el-col>
+                    </el-row>  
+                    <el-row :gutter="30">
+                        <el-col :span="8">
+                            <span>
+                                led1亮度
+                            </span>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider v-model="led1Bright" :max="100"></el-slider>
+                        </el-col>
+                    </el-row> 
+                    <el-row :gutter="30">
+                        <el-col :span="8">
+                            <span>
+                                led2亮度
+                            </span>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-slider v-model="led2Bright" :max="100"></el-slider>
+                        </el-col>
+                    </el-row>                                                                            
                 </el-card>
             </el-col>
             <el-col :span="12"></el-col>            
@@ -60,27 +90,10 @@
                 moduleSwitch: false,
                 led1Switch: false,
                 led2Switch: false,
-                ledInterval: 0,
-                ledOptions: [{
-                    label: '100毫秒',
-                    value: 100
-                },
-                {
-                    label: '200毫秒',
-                    value: 200
-                },
-                {
-                    label: '300毫秒',
-                    value: 300
-                },
-                {
-                    label: '400毫秒',
-                    value: 400
-                },
-                {
-                    label: '500毫秒',
-                    value: 500
-                }]
+                led1Interval: 0,
+                led2Interval: 0,
+                led1Bright: 100,
+                led2Bright: 100,
             }
         },
         sockets: {
@@ -90,6 +103,7 @@
         },
         watch: {
             moduleSwitch(newVal) {
+                this.led1Switch = this.led2Switch = newVal
                 newVal ? this.enableModule() : this.disAbleModule()
             },
             led1Switch(newVal) {
@@ -106,11 +120,11 @@
             disAbleModule() {
                 this.$socket.emit('disableLedModule')
             },
-            turnOnLed() {
-                this.$socket.emit('turnOn')
+            turnOnLed(num) {
+                this.$socket.emit('led' + num + 'turnOn')
             },
-            turnOffLed() {
-                this.$socket.emit('turnOff')
+            turnOffLed(num) {
+                this.$socket.emit('led' + num + 'turnOff')
             }
         }
     }

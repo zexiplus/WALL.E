@@ -92,6 +92,9 @@
                 ctx.lineCap = 'round'
                 ctx.stroke()                
             },
+            getTemperature(type) {
+                this.$http.get()
+            },
             drawChart() {
                 var ctx = this.$refs.temperatureChart.getContext('2d')
                 new this.$Chart(ctx,{
