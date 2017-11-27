@@ -32,7 +32,6 @@ var io = socket(server)
 if(process.argv.indexOf('ras') > -1) {
   var five = require('johnny-five')
   var Raspi = require('raspi-io')
-  var {ledOne,ledTwo} = require('./controller/led.js')
   var board = new five.Board({
     io: new Raspi,
     repl: false
@@ -42,6 +41,7 @@ if(process.argv.indexOf('ras') > -1) {
     var servoPin = new five.Pin({pin:1,mode:4}) //设置1引脚为伺服电机模式
     var servo = new five.Servo({pin:1,startAt:0})
     io.on('connection',function(client) {
+      var {ledOne,ledTwo} = require('./controller/led.js')
       console.log('websocket success')
       ledOne.bindClient(client)
       ledTwo.bindClient(client)
