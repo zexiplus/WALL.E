@@ -5,7 +5,7 @@ import router from './router'
 import vueResource from 'vue-resource'
 import VueSocketio from 'vue-socket.io'
 import store from '@s'
-import {raspiIp} from '&c'
+import {raspiIp,raspiIpWire} from '&c'
 import ElementUI from 'element-ui'
 import plugins from '@p'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -13,7 +13,7 @@ import '@a/style/reset.css'
 
 Vue.use(vueResource)
 Vue.use(ElementUI)
-Vue.use(VueSocketio,raspiIp)
+Vue.use(VueSocketio,raspiIpWire)
 Vue.use(plugins)
 /*edit*/
 Vue.config.productionTip = false

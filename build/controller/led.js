@@ -1,33 +1,43 @@
 var five = require('johnny-five')
 var Raspi = require('raspi-io')
-class Led {
-    constructor(pin) {
-        this.pin = pin
-        this.instance = new five.Led(pin)
-    }
-    bindClient(client) {
-        this.client = client
-        return this
-    }
-    bindHandler(eventName,handler) {
-        this.client.on(eventName,handler)
-        return this
+
+var ledOne = {
+    pin: 28,
+    instance: new five.Led(28),
+    init(client) {
+        client.on('led1TurnOn', argv => {
+            this.instance.on()
+        })
+        client.on('led1TurnOff', argv => {
+            this.instance.off()
+        })
+        client.on('led1adjustBright', argv => {
+            this.instance.brightness(argv)
+        })
+        client.on('led1blink', argv => {
+            this.instance.blink(argv)
+        })
     }
 }
-var ledOne = new Led(28),
-    ledTwo = new Led(29)
-ledOne.bindHandler('led1turnOn',function() {
-    this.instance.on()
-})
-ledOne.bindHandler('led1turnOff',function() {
-    this.instance.off()
-})
-ledOne.bindHandler('led1adjustBright',function(arg) {
-    this.instance.brightness(arg)
-})
-ledOne.bindHandler('led1blink',function(arg) {
-    this.instance.blink(arg)
-})
+var ledTwo = {
+    pin: 29,
+    instance: new five.Led(29),
+    init(client) {
+        client.on('led2TurnOn', argv => {
+            this.instance.on()
+        })
+        client.on('led2TurnOff', argv => {
+            this.instance.off()
+        })
+        client.on('led2adjustBright', argv => {
+            this.instance.brightness(argv)
+        })
+        client.on('led2blink', argv => {
+            this.instance.blink(argv)
+        })
+    }
+}
+
 module.exports = {
     ledOne,
     ledTwo

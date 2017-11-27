@@ -4,7 +4,7 @@ Vue.use(vuex)
 const store = new vuex.Store({
     namespaced: true,
     state: {
-        rasSocketIp: 'http://192.168.17.149:3000',
+        rasSocketIp: 'http://192.168.41.89:3000',
         globalSwitch: true,
         ledSwitch: true,
         cameraSwitch: true,
