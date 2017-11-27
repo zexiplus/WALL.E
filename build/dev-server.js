@@ -37,17 +37,14 @@ if(process.argv.indexOf('ras') > -1) {
     repl: false
   })
   board.on('ready',function() {
+    var {ledOne,ledTwo} = require('./controller/led.js')
+    var {servo,camera} = require('./controller/camera.js')
     console.log('board init successfully')
-    var servoPin = new five.Pin({pin:1,mode:4}) //设置1引脚为伺服电机模式
-    var servo = new five.Servo({pin:1,startAt:0})
     io.on('connection',function(client) {
-      var {ledOne,ledTwo} = require('./controller/led.js')
-      console.log('websocket success')
-      ledOne.bindClient(client)
-      ledTwo.bindClient(client)
-      client.on('turnCamera',function(arg) {
-	       servo.to(arg)
-      })
+      console.log('websocket connect successfully')
+      ledOne.init(client)
+      ledTwo.init(client)
+      servo.init(client)
     })
   })
 }
