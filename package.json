@@ -5,7 +5,7 @@
   "author": "zexiplus <zexiplus@outlook.com>",
   "private": true,
   "scripts": {
-    "pi": "sudo node build/dev-server.js ras",
+    "board": "sudo node board/index.js",
     "dev": "node build/dev-server.js",
     "start": "sudo node build/dev-server.js ras",
     "build": "node build/build.js",

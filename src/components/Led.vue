@@ -63,7 +63,7 @@
                             </span>
                         </el-col>
                         <el-col :span="16">
-                            <el-slider v-model="led1Bright" :max="100"></el-slider>
+                            <el-slider @change="adjustLedBright(1)" v-model="led1Bright" :step="10" :max="100"></el-slider>
                         </el-col>
                     </el-row> 
                     <el-row :gutter="30">
@@ -111,7 +111,15 @@
             },
             led2Switch(newVal) {
                 newVal ? this.turnOnLed(2) : this.turnOffLed(2)
-            }
+            },
+	    led1Bright(newVal) {
+	    	this.$socket.emit('led1AdjustBright',Math.floor(newVal * 2.55))
+		console.log('adjustBright')
+	    },
+	    led1Interval(newVal) {
+		this.$socket.emit('led1Blink',newVal)
+		console.log('blink')
+	    }
         },
         methods: {
             enableModule() {
@@ -121,11 +129,14 @@
                 this.$socket.emit('disableLedModule')
             },
             turnOnLed(num) {
-                this.$socket.emit('led' + num + 'turnOn')
+                this.$socket.emit('led' + num + 'TurnOn')
             },
             turnOffLed(num) {
-                this.$socket.emit('led' + num + 'turnOff')
-            }
+                this.$socket.emit('led' + num + 'TurnOff')
+            },
+	    adjustLedBright(num) {
+            	this.$socket.emit('led' + num + 'AdjustBright',this.led1Bright)
+	    }
         }
     }
 </script>

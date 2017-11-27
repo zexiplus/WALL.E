@@ -9,12 +9,8 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
-var socket = require('socket.io')
 var http = require('http')
-var cp = require('child_process')
-if(process.argv.indexOf('ras') > -1) {
-  cp.exec("/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/input_uvc.so -d /dev/video0 -n -y -f 25 -r 640x480' -o '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/output_http.so -n -w /usr/local/www'")
-}
+
 
 
 // default port where dev server listens for incoming traffic
@@ -27,30 +23,7 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 var server = http.createServer(app)
-var io = socket(server)
 
-if(process.argv.indexOf('ras') > -1) {
-  var five = require('johnny-five')
-  var Raspi = require('raspi-io')
-  var board = new five.Board({
-    io: new Raspi,
-    repl: false
-  })
-  board.on('ready',function() {
-    var {ledOne,ledTwo} = require('./controller/led.js')
-    var {servo,camera} = require('./controller/camera.js')
-    console.log('board init successfully')
-    io.on('connection',function(client) {
-      console.log('websocket connect successfully')
-      ledOne.init(client)
-      ledTwo.init(client)
-      servo.init(client)
-    })
-  })
-}
-
-
-io.listen(3000) //websocket listen port
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
