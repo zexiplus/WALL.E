@@ -25,7 +25,7 @@ var ledTwo = {
         client.on('led2TurnOff', argv => {
             this.instance.off()
         })
-        client.on('led2blink', argv => {
+        client.on('led2Blink', argv => {
             this.instance.blink(argv)
         })
     }
