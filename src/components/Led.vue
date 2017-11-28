@@ -112,14 +112,12 @@
             led2Switch(newVal) {
                 newVal ? this.turnOnLed(2) : this.turnOffLed(2)
             },
-	    led1Bright(newVal) {
-	    	this.$socket.emit('led1AdjustBright',Math.floor(newVal * 2.55))
-		console.log('adjustBright')
-	    },
-	    led1Interval(newVal) {
-		this.$socket.emit('led1Blink',newVal)
-		console.log('blink')
-	    }
+    	    led1Interval(newVal) {
+        		this.$socket.emit('led1Blink',newVal)
+    	    },
+            led2Interval(newVal) {
+                this.$socket.emit('led2Blink',newVal)
+            }
         },
         methods: {
             enableModule() {
@@ -134,9 +132,9 @@
             turnOffLed(num) {
                 this.$socket.emit('led' + num + 'TurnOff')
             },
-	    adjustLedBright(num) {
-            	this.$socket.emit('led' + num + 'AdjustBright',this.led1Bright)
-	    }
+    	    adjustLedBright(num) {
+                this.$socket.emit('led' + num + 'AdjustBright',this.led1Bright)
+    	    }
         }
     }
 </script>

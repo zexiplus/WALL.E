@@ -36,13 +36,19 @@
         name: 'thermometer',
         data() {
             return {
-                currTemperature: 10
+                currTemperature: 0
             }
         },
         mounted() {
             this.drawThermometer()
             this.drawThermometerLine(this.currTemperature)
             this.drawChart()
+        },
+        sockets: {
+            changeT(data) {
+                this.currTemperature = data
+                this.drawThermometerLine(data)
+            }
         },
         methods: {
             //绘制温度计
