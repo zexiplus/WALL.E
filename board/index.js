@@ -18,12 +18,14 @@ var board = new five.Board({
   board.on('ready',function() {
     var {ledOne,ledTwo} = require('./modules/led.js')
     var {servo,camera} = require('./modules/camera.js')
+    var thermometer = require('./modules/thermometer.js')
     console.log('board init successfully')
     io.on('connection',function(client) {
       console.log('websocket connect successfully')
       ledOne.init(client)
       ledTwo.init(client)
       servo.init(client)
+      thermometer.init(client)
     })
   })
 
