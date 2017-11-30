@@ -119,6 +119,8 @@
                 this.$socket.emit('led2Blink',newVal)
             }
         },
+        mounted() {
+        },
         methods: {
             enableModule() {
                 this.$socket.emit('enableLedModule')

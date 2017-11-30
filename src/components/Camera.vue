@@ -29,12 +29,12 @@
     </div>
 </template>
 <script>
-    import {cameraUrl,cameraUrlWire} from '&c'
+    import {cameraUrl} from '&c'
     export default {
         name: 'camera',
         data() {
             return {
-                url: cameraUrlWire,
+                url: cameraUrl,
                 rotateAngle: 90,
             }
         },

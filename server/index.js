@@ -14,6 +14,7 @@ cp.exec("/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streame
 var app = express() 
 var server = http.createServer(app)
 var io = socket(server)
+
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extend: false}))
@@ -25,6 +26,7 @@ app.post('/board/led',function(req,res,next) {
     }))
 })
 
+server.listen(3030)
 
 
 var board = new five.Board({

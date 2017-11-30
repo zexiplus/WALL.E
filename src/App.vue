@@ -15,7 +15,7 @@
                 <i class="el-icon-document"></i>
                 <span >介绍</span>
               </el-menu-item>    
-              <el-menu-item index="collection">
+              <el-menu-item index="integration">
                 <i class="el-icon-more"></i>
                 <span >集合</span>
               </el-menu-item>                        
@@ -35,14 +35,11 @@
                 <i class="el-icon-setting"></i>
                 <span>设置</span>
               </el-menu-item>
-              
             </el-menu>
           </el-col>
          </el-row>
        </el-aside>
        <el-container>
-        <el-header height="5vh">
-        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -93,7 +90,7 @@ export default {
     color: #333;
     text-align: right;
     line-height: 40px;
-    height: 95vh;
+    height: 100vh;
     overflow: hidden;
     min-width: 900px;
   }
