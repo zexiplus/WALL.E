@@ -5,7 +5,7 @@
          <el-row>
            <el-col :span="24">
             <el-menu
-              default-active="1"
+              default-active="description"
               class="el-menu-vertical-demo"
               background-color="#545c64"
               text-color="#fff"
@@ -66,6 +66,9 @@ export default {
     },
     directives: {
 
+    },
+    mounted() {
+        this.$router.push({name:'description'})
     }
 }
 </script>

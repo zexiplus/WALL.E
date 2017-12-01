@@ -6,6 +6,16 @@
                     <h1 slot="header" class="textAlign">
                         温度记录
                     </h1>
+                    <el-row :gutter="20" type="flex" justify="end">
+                        <el-col :span="6" class="alignLeft">
+                            <el-input-number v-model="num" size="mini" :min="1" :max="30" label="">
+                                
+                            </el-input-number>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-button size="mini" round @click="getTemperature(num)">获取温度数据</el-button>
+                        </el-col>
+                    </el-row>                    
                     <el-row>
                         <el-col :span="24" class="canvasAlign">
                             <canvas ref="temperatureChart" width="600" height="400"></canvas>
@@ -26,23 +36,37 @@
                             <h3> {{currTemperature}}</h3>
                         </el-col>
                     </el-row>
-                </el-card>                
+                    <el-row>
+                        <el-col :span="8">
+                            <el-button size="mini" round @click="updateTemperature">更新温度</el-button>
+                        </el-col>                        
+                        <el-col :offset="6" :span="8">
+                            <el-button size="mini" round @click="saveTemperature(currTemperature)">存储温度</el-button>
+                        </el-col>
+                         
+                    </el-row>
+                </el-card>
+
             </el-col>
         </el-row>
     </div>    
 </template>
 <script>
+    import {api} from '&c'
     export default {
         name: 'thermometer',
         data() {
             return {
+                num: 5,
                 currTemperature: 0
             }
         },
         mounted() {
+            this.updateTemperature()
             this.drawThermometer()
             this.drawThermometerLine(this.currTemperature)
             this.drawChart()
+            this.getTemperature(this.num)
         },
         sockets: {
             changeT(data) {
@@ -51,6 +75,36 @@
             }
         },
         methods: {
+            updateTemperature() {
+                this.$socket.emit('updateTemperature')
+            },
+            saveTemperature(num) {
+                var date = new Date(),
+                    time = date.getFullYear() + '-' +( 1 + date.getMonth()) + '-' + date.getDate() + '-' + date.getHours() + '/' + date.getMinutes() + '/' + date.getSeconds()
+                return this.$http.post(api.temperture.saveTemperature,{
+                    temperature: num,
+                    time: time
+                })
+            },
+            getTemperature(num) {
+                return this.$http.get(api.temperture.getTemperature,{
+                    params: {
+                        total: num
+                    }
+                }).then(res => {
+                    var arr = res.body.map(item => JSON.parse(item)),
+                        labels = [],
+                        values = [];
+                    console.log(arr)
+                    arr.forEach(item => {
+                        labels.push(item.label)
+                        values.push(item.val)
+                    })
+                    this.tempLabels = labels
+                    this.tempData = values
+                    this.drawChart()
+                })
+            },
             //绘制温度计
             drawThermometer() {
                 var ctx = this.$refs.thermometer.getContext('2d')
@@ -98,34 +152,16 @@
                 ctx.lineCap = 'round'
                 ctx.stroke()                
             },
-            getTemperature(type) {
-                this.$http.get()
-            },
             drawChart() {
                 var ctx = this.$refs.temperatureChart.getContext('2d')
                 new this.$Chart(ctx,{
                     type: 'line',
                     data: {
-                        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                        labels: this.tempLabels,
                         datasets: [{
                             label: '温度',
-                            data: [12, 19, 30, 45, 2, 3],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
+                            data: this.tempData,
+                            backgroundColor : 'rgba(255, 99, 132, 0.7)',
                             borderWidth: 1
                         }]
                     },
@@ -149,5 +185,8 @@
     }
     .canvasAlign {
         text-align: center;
+    }
+    .alignLeft {
+        text-align: right
     }
 </style>
