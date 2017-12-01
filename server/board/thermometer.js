@@ -6,10 +6,12 @@ var thermometer = {
 		controller: 'MPU6050'
 	}),
 	init(client) {
-	    client.emit('changeT',this.instance.celsius)
+	    var that = this
 	    this.instance.on('change',function() {
 	        client.emit('changeT',this.celsius)
-	        console.log('now T',this.celsius)
+	    })
+	    client.on('updateTemperature',function() {
+		client.emit('changeT',that.instance.celsius)
 	    })
 	}
 }
