@@ -87,20 +87,42 @@
                 </el-card>
             </el-col>
             <el-col :span="10">
-                <el-card>
-                    <h1 slot="header">socket信道连接</h1>
-                    <el-row>
-                        <el-col :span="16" :push="4">
-                            <el-input v-model="rasSocketIp"></el-input>
-                        </el-col>
-                        <el-col :span="20">
-                            <div class="btnWrapper">
-                                <el-button type="success" @click="connectSocket" plain>连接</el-button>
-                                <el-button type="danger" @click="closeConnect" plain>关闭</el-button>
-                            </div>
-                        </el-col>
-                    </el-row>
-                </el-card>
+              <el-row>
+                <el-col :span="24">
+                  <el-card>
+                      <h1 slot="header">socket信道连接</h1>
+                      <el-row>
+                          <el-col :span="16" :push="4">
+                              <el-input v-model="socketAddress"></el-input>
+                          </el-col>
+                          <el-col :span="20">
+                              <div class="btnWrapper">
+                                  <el-button type="success" @click="connectSocket" plain>连接</el-button>
+                                  <el-button type="danger" @click="closeConnect" plain>关闭</el-button>
+                              </div>
+                          </el-col>
+                      </el-row>
+                  </el-card>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-card>
+                      <h1 slot="header">摄像头ip连接</h1>
+                      <el-row>
+                          <el-col :span="16" :push="4">
+                              <el-input v-model="cameraAddress"></el-input>
+                          </el-col>
+                          <el-col :span="20">
+                              <div class="btnWrapper">
+                                  <el-button type="success" @click="connectCamera" plain>连接</el-button>
+                                  <el-button type="danger" @click="closeCamera" plain>关闭</el-button>
+                              </div>
+                          </el-col>
+                      </el-row>
+                  </el-card>
+                </el-col>
+              </el-row>
             </el-col>
         </el-row>
     </div>
@@ -113,10 +135,6 @@
         name: 'settings',
         socket: {
             connect() {
-                this.$message({
-                    type: 'success',
-                    message: 'socket信道连接关闭成功'
-                })
             }
         },
         watch: {
@@ -125,24 +143,30 @@
             }
         },
         computed: {
-            ...mapState(['globalSwitch','rasSocketIp','ledSwitch','cameraSwitch',
+            ...mapState(['globalSwitch','serverIp','cameraIp','ledSwitch','cameraSwitch',
                 'thermometerSwitch','proximitySwitch','gpsSwitch','remoteControlSwitch','redRaySwitch'])
         },
         data() {
             return {
-
+                socketAddress: '',
+                cameraAddress: ''
             }
+        },
+        mounted() {
+            this.socketAddress = this.serverIp
+            this.cameraAddress = this.cameraIp
         },
         methods: {
             connectSocket() {
+                this.changeIp()
                 if(!this.$socket) {
-                    Vue.use(VueSocketio,this.rasSocketIp)
+                    Vue.use(VueSocketio,this.serverIp)
                 }
                 else {
                     if(this.$socket.connected) {
                         this.$socket.close()
                     }
-                    this.$socket.connect(this.rasSocketIp)
+                    this.$socket.connect(this.serverIp)
                     if(this.$socket.connected) {
                         this.$message({
                             type: 'success',
@@ -176,7 +200,10 @@
                 console.log('this.socket',this.$socket)
             },
             changeIp() {
-                console.log(this.rasSocketIp)
+                this.$store.commit('changeRasSocketIp',this.socketAddress)
+            },
+            connectCamera() {
+                this.$store.commit('changeRasCameraIp',this.cameraAddress)
             }
         }
     }

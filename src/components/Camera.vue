@@ -11,7 +11,7 @@
                             <iframe :src="url" id="camera"></iframe>
                         </el-col>
                     </el-row>
-                </el-card>                
+                </el-card>
             </el-col>
             <el-col :span="6">
                 <el-card>
@@ -23,19 +23,22 @@
                             <el-slider v-model="rotateAngle" :min="0" :max="180"></el-slider>
                         </el-col>
                     </el-row>
-                </el-card>                
+                </el-card>
             </el-col>
         </el-row>
     </div>
 </template>
 <script>
-    import {cameraUrl} from '&c'
     export default {
         name: 'camera',
         data() {
             return {
-                url: cameraUrl,
                 rotateAngle: 90,
+            }
+        },
+        computed: {
+            url() {
+                return this.$store.state.cameraIp
             }
         },
         watch: {
@@ -54,7 +57,7 @@
                 console.log('ah')
             }
         },
-        
+
     }
 </script>
 <style>

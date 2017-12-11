@@ -4,7 +4,8 @@ Vue.use(vuex)
 const store = new vuex.Store({
     namespaced: true,
     state: {
-        rasSocketIp: 'http://192.168.17.149:3000',
+        serverIp: localStorage.getItem('serverIp') || 'http://192.168.17.149:3000',
+        cameraIp: localStorage.getItem('cameraIp') || 'http://192.168.17.149:8080/?action=stream',
         globalSwitch: true,
         ledSwitch: true,
         cameraSwitch: true,
@@ -16,7 +17,12 @@ const store = new vuex.Store({
     },
     mutations: {
         changeRasSocketIp(state,arg) {
-            state.rasSocketIp = arg
+            state.serverIp = arg
+            localStorage.setItem('serverIp',arg)
+        },
+        changeRasCameraIp(state,arg) {
+            state.cameraIp = arg
+            localStorage.setItem('cameraIp',arg)
         }
     },
     actions: {
