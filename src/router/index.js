@@ -17,7 +17,7 @@ const page = Object.freeze({
 })
 
 export default new Router({
-  mode:'history',
+  mode:'hash',
   routes: [
     {path: '/description',name: 'description',component: page.description},
     {path:'/home',name:'home',component:page.home},
