@@ -47,12 +47,15 @@ npm install
 ### 开发模式运行web界面程序
 ```shell
 npm run dev
+
 // then open the browser at http://localhost:1234
 ```
 ### 生产环境运行web界面程序
 ```shell
 npm run build
+
 npm run local
+
 //then open the browser at http://localhost:2999
 ```
 ### 运行服务端程序
@@ -78,6 +81,12 @@ npm run board
 
 
 ## 项目展示
+- [web控制页面](https://jsrobot.herokuapp.com)
 
 ## 项目布局
 
+## 项目维护人 
+- [float](https://github.com/zexiplus)
+
+## license
+GPL
