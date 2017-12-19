@@ -10,9 +10,9 @@
 ##技术栈
 
 > * johnny-five
-> * vue 
+> * vue
 > * express
-> * chart.js 
+> * chart.js
 > * mongoDB
 
 ------
@@ -30,7 +30,7 @@
 ##环境配置和依赖
 -  树莓派开发板（Raspberry Pi 3 Model B）
 -  ubuntu mate16.0.4操作系统
--  node  && npm 
+-  node  && npm
 -  [MJPG-streamer](http://shumeipai.nxez.com/2017/05/14/raspberry-pi-mjpg-streamer-installation.html)
 
 ##运行项目
@@ -78,4 +78,6 @@ npm run board
 
 
 ##项目展示
+
 ##项目布局
+
