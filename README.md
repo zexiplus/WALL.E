@@ -1,4 +1,4 @@
-##前言
+## 前言
 ------
 
 ​	项目的灵感来自皮克斯动画《机器人总动员》的主角瓦力（wall.e)。一个在末日的废墟中幸存并日复一日清洁着地球的可爱机器人。
@@ -7,7 +7,7 @@
 ​	此项目包括了服务端到前端程序，开发语言选用javascript,功能上包括了视频监控，温度数据采集，远程遥控，距离测量，gps定位等功能。
 欢迎对物联网感兴趣的开发人员Issues
 
-##技术栈
+## 技术栈
 
 > * johnny-five
 > * vue
@@ -17,7 +17,7 @@
 
 ------
 
-##目标功能
+## 目标功能
 - [x] 支持视频实时监控
 - [x] 支持摄像头转动
 - [x] 支持手动控制电机运行
@@ -27,14 +27,14 @@
 - [ ] 支持循迹功能
 - [ ] 支持自由巡航
 
-##环境配置和依赖
+## 环境配置和依赖
 -  树莓派开发板（Raspberry Pi 3 Model B）
 -  ubuntu mate16.0.4操作系统
--  node  && npm
+-  node && npm
 -  [MJPG-streamer](http://shumeipai.nxez.com/2017/05/14/raspberry-pi-mjpg-streamer-installation.html)
 
-##运行项目
-###项目下载
+## 运行项目
+### 项目下载
 
 ```shell
 git clone https://github.com/zexiplus/WALL.E.git
@@ -44,24 +44,24 @@ cd WALL.E
 npm install
 
 ```
-###web界面程序开发模式运行
+### 开发模式运行web界面程序
 ```shell
 npm run dev
 // then open the browser at http://localhost:1234
 ```
-###web界面程序生产环境运行
+### 生产环境运行web界面程序
 ```shell
 npm run build
 npm run local
 //then open the browser at http://localhost:2999
 ```
-###板载服务端程序运行
+### 运行服务端程序
 ```shell
 npm run board
 ```
 
 
-##材料准备
+## 材料准备
 
 | 模块             |   价格 |  数量  |
 | -------------- | ---: | :--: |
@@ -77,7 +77,7 @@ npm run board
 
 
 
-##项目展示
+## 项目展示
 
-##项目布局
+## 项目布局
 
