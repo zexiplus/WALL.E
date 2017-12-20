@@ -5,6 +5,7 @@ var control = {
     instances: [new five.Pin(21),new five.Pin(22),new five.Pin(23),new five.Pin(24)],
     moves: {
         moveForward() {
+            console.log('move forward')
             this.instances[0].high()
             this.instances[1].low()
             this.instances[2].high()
