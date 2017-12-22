@@ -81,12 +81,11 @@ npm run board
 
 
 ## 项目展示
-- [web控制页面](https://jsrobot.herokuapp.com)
+[web控制页面](https://jsrobot.herokuapp.com)
 
-## 项目布局
 
 ## 项目维护人 
 - [float](https://github.com/zexiplus)
 
-## license
+## 协议
 GPL

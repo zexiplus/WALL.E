@@ -4,25 +4,30 @@ Vue.use(vuex)
 const store = new vuex.Store({
     namespaced: true,
     state: {
-        serverIp: localStorage.getItem('serverIp') || 'http://192.168.17.149:3000',
-        cameraIp: localStorage.getItem('cameraIp') || 'http://192.168.17.149:8080/?action=stream',
-        globalSwitch: true,
-        ledSwitch: true,
-        cameraSwitch: true,
-        thermometerSwitch: true,
-        proximitySwitch: true,
-        gpsSwitch: true,
-        remoteControlSwitch: true,
-        redRaySwitch: true
+        serverAddress: localStorage.getItem('serverAddress') || 'http://192.168.17.149:3030',
+        socketAddress: localStorage.getItem('socketAddress') || 'http://192.168.17.149:3000',
+        cameraAddress: localStorage.getItem('cameraAddress') || 'http://192.168.17.149:8080/?action=stream',
     },
     mutations: {
-        changeRasSocketIp(state,arg) {
-            state.serverIp = arg
-            localStorage.setItem('serverIp',arg)
+        changeSocket(state,arg) {
+            state.socketAddress = arg
+            localStorage.setItem('socketAddress',arg)
         },
-        changeRasCameraIp(state,arg) {
-            state.cameraIp = arg
-            localStorage.setItem('cameraIp',arg)
+        changeServer(state,arg) {
+            state.serverAddress = arg
+            localStorage.setItem('serverAddress',arg)
+        },
+        closeServer(state,arg) {
+            state.serverAddress = ''
+            localStorage.setItem('serverAddress','')
+        },
+        changeCamera(state,arg) {
+            state.cameraAddress = arg
+            localStorage.setItem('cameraAddress',arg)
+        },
+        closeCamera(state,arg) {
+            state.cameraAddress = ''
+            localStorage.setItem('cameraAddress','')
         }
     },
     actions: {
