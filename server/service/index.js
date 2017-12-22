@@ -1,25 +1,19 @@
-var express = require('express'),
-    fs      = require('fs')
-var router = express.Router()
+var express     = require('express'),
+    db	        = require('./connectMongo.js'),
+    Temperature = require('./temperatureModel.js'),
+    router      = express.Router()
 router.get('/temperature/getTemperature',function(req,res,next) {
-    var index = req.query.total;
-    var	arr;
-    fs.readFile('./server/db/temperatureRecord.txt','utf8',function(err,data) {
-	if(err) throw err
-	arr = data.split(';')
-	res.end(JSON.stringify(arr.slice(arr.length - index - 1,arr.length - 1)))
-	next()
-    })
+    var num = req.query.total
+    res.end('wait ok?')
+    next()
+
 })
 router.post('/temperature/saveTemperature',function(req,res,next) {
     if(req.body) {
-	var str = JSON.stringify({label:req.body.time,val:req.body.temperature}) + ';'
-	fs.writeFile('./server/db/temperatureRecord.txt',str,{flag:'a'},function(err) {
-	    if(err) throw err	
-	    console.log('str saved')
-	    res.end(JSON.stringify({success:true}))
-    	    next()
-	})
+	var data = new Temperature({time:req.body.time,temValue:req.body.temperature}).saveAndLog()
+	
+	res.end(JSON.stringify({success:true}))
+    	next()
     }
 })
 
