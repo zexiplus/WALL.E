@@ -63,7 +63,7 @@
         },
         computed: {
             serverIp() {
-                return this.$store.state.serverIp
+                return this.$store.state.serverAddress
             }
         },
         mounted() {

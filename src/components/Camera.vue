@@ -38,7 +38,7 @@
         },
         computed: {
             url() {
-                return this.$store.state.cameraIp
+                return this.$store.state.cameraAddress
             }
         },
         watch: {
