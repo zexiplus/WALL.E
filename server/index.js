@@ -10,7 +10,7 @@ var express = require('express')
 var cors = require('cors')
 var router = require('./service')
 //turn on camera
-cp.exec("/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/input_uvc.so -d /dev/video0 -n -y -f 25 -r 640x480' -o '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/output_http.so -n -w /usr/local/www'") 
+cp.exec("/home/pi/Software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i '/home/pi/Software/mjpg-streamer/mjpg-streamer-experimental/input_uvc.so -d /dev/video0 -n -y -f 25 -r 640x480' -o '/home/pi/Software/mjpg-streamer/mjpg-streamer-experimental/output_http.so -n -w /usr/local/www'") 
 
 var app = express() 
 var server = http.createServer(app)
@@ -23,7 +23,7 @@ app.use(cookieParser())
 app.use(cors())
 app.use(router)
 
-server.listen(3030)
+server.listen(3030) //server listen port
 
 
 var board = new five.Board({
@@ -34,6 +34,7 @@ board.on('ready',function() {
   var {ledOne,ledTwo} = require('./board/led.js')
   var {servo,camera} = require('./board/camera.js')
   var thermometer = require('./board/thermometer.js')
+  var control = require('./board/control.js')
   console.log('board init successfully')
   io.on('connection',function(client) {
     console.log('websocket connect successfully')
@@ -41,6 +42,7 @@ board.on('ready',function() {
     ledTwo.init(client)
     servo.init(client)
     thermometer.init(client)
+    control.init(client)
   })
 })
 
