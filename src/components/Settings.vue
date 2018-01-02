@@ -1,26 +1,32 @@
 <template>
     <div class="container">
-        <el-row type="flex" justify="start" :gutter="50">
-            <el-col :span="14" >
+        <el-row type="flex" justify="start" :gutter="20">
+            <el-col :span="12" >
                 <el-card>
                     <h1 slot="header">web shell</h1>
                     <div class="webShell" contenteditable="true"></div>
                 </el-card>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-row>
                 <el-col :span="24">
                   <el-card>
                       <h1 slot="header">socket信道连接</h1>
                       <el-row>
-                          <el-col :span="14">
-                              <el-input v-model="socketAddress"></el-input>
+                          <el-col :span="18">
+                              <el-input size="small" v-model="socketAddr">
+                                <el-select v-model="socketT" slot="prepend">
+                                  <el-option label="http://" value="http://"></el-option>
+                                  <el-option label="https://" value="https://"></el-option>
+                                  <el-option label="none" value=""></el-option>
+                                </el-select>
+                              </el-input>
                           </el-col>
-                          <el-col :span="4" :offset="1">
-                              <el-button type="success" @click="connectSocket" plain>连接</el-button>
+                          <el-col :span="2" :offset="1">
+                              <el-button type="success" size="small" round  @click="connectSocket" plain>连接</el-button>
                           </el-col>
-                          <el-col :span="4" :offset="1">
-                              <el-button type="danger" @click="closeSocket" plain>关闭</el-button>
+                          <el-col :span="2" :offset="1">
+                              <el-button type="danger" size="small" round  @click="closeSocket" plain>关闭</el-button>
                           </el-col>
                       </el-row>
                   </el-card>
@@ -32,16 +38,22 @@
               <el-row>
                 <el-col :span="24">
                   <el-card>
-                      <h1 slot="header">摄像头ip连接</h1>
+                      <h1 slot="header">摄像头连接</h1>
                       <el-row>
-                          <el-col :span="14">
-                              <el-input v-model="cameraAddress"></el-input>
+                          <el-col :span="18">
+                              <el-input size="small" v-model="cameraAddr">
+                                <el-select v-model="cameraT" slot="prepend">
+                                  <el-option label="http://" value="http://"></el-option>
+                                  <el-option label="https://" value="https://"></el-option>
+                                  <el-option label="none" value=""></el-option>
+                                </el-select>
+                              </el-input>
                           </el-col>
-                          <el-col :span="4" :offset="1">
-                              <el-button type="success" @click="connectCamera" plain>连接</el-button>
+                          <el-col :span="2" :offset="1">
+                              <el-button type="success" size="small" round @click="connectCamera" plain>连接</el-button>
                           </el-col>
-                          <el-col :span="4" :offset="1">
-                              <el-button type="danger" @click="closeCamera" plain>关闭</el-button>
+                          <el-col :span="2" :offset="1">
+                              <el-button type="danger" size="small" round @click="closeCamera" plain>关闭</el-button>
                           </el-col>
                       </el-row>
                   </el-card>
@@ -55,14 +67,20 @@
                   <el-card>
                       <h1 slot="header">server连接</h1>
                       <el-row>
-                          <el-col :span="14">
-                              <el-input v-model="serverAddress"></el-input>
+                          <el-col :span="18">
+                              <el-input size="small" v-model="serverAddr">
+                                <el-select v-model="serverT" slot="prepend">
+                                  <el-option label="http://" value="http://"></el-option>
+                                  <el-option label="https://" value="https://"></el-option>
+                                  <el-option label="none" value=""></el-option>
+                                </el-select>
+                              </el-input>
                           </el-col>
-                          <el-col :span="4" :offset="1">
-                              <el-button type="success" @click="connectServer" plain>连接</el-button>
+                          <el-col :span="2" :offset="1">
+                              <el-button size="small" type="success" round @click="connectServer" plain>连接</el-button>
                           </el-col>
-                          <el-col :span="4" :offset="1">
-                              <el-button type="danger" @click="closeServer" plain>关闭</el-button>
+                          <el-col :span="2" :offset="1">
+                              <el-button size="small" type="danger" round @click="closeServer" plain>关闭</el-button>
                           </el-col>
                       </el-row>
                   </el-card>
@@ -85,25 +103,31 @@
         watch: {
         },
         computed: {
-            ...mapState(['serverAddress','socketAddress','cameraAddress'])
+            ...mapState(['serverAddress','socketAddress','cameraAddress','serverType','socketType','cameraType'])
         },
         data() {
             return {
                 serverAddr: '',
+                serverT: '',
                 socketAddr: '',
-                cameraAddr: ''
+                socketT: '',
+                cameraAddr: '',
+                cameraT: ''
             }
         },
         mounted() {
             this.serverAddr = this.serverAddress
             this.socketAddr = this.socketAddress
             this.cameraAddr = this.cameraAddress
+            this.serverT = this.serverType
+            this.socketT = this.socketType
+            this.cameraT = this.cameraType
         },
         methods: {
             connectSocket() {
                 this.saveSocket()
                 if(!this.$socket) {
-                    Vue.use(VueSocketio,this.socketAddr)
+                    Vue.use(VueSocketio,this.socketType + this.socketAddr)
                     this.$message({
                         type: 'success',
                         message: 'socket信道连接成功'
@@ -113,7 +137,7 @@
                     if(this.$socket.connected) {
                         this.$socket.close()
                     }
-                    this.$socket.connect(this.socketAddr)
+                    this.$socket.connect(this.socketType + this.socketAddr)
                     this.$message({
                         type: 'success',
                         message: 'socket信道连接成功'
@@ -137,22 +161,40 @@
                         message: 'socket信道连接未建立'
                     })
                 }
-                console.log('this.socket',this.$socket)
             },
             saveSocket() {
                 this.$store.commit('changeSocket',this.socketAddr)
+                this.$store.commit('changeSocketType',this.socketT)
             },
             connectServer() {
                 this.$store.commit('changeServer',this.serverAddr)
+                this.$store.commit('changeServerType',this.serverT)
+                this.$message({
+                    type: 'success',
+                    message: '服务器连接成功'
+                })
             },
             closeServer() {
                 this.$store.commit('closeServer')
+                this.$message({
+                    type: 'info',
+                    message: '服务器关闭成功'
+                })
             },
             connectCamera() {
+                this.$message({
+                    type: 'success',
+                    message: '摄像机连接成功'
+                })
                 this.$store.commit('changeCamera',this.cameraAddr)
+                this.$store.commit('changeCameraType',this.cameraT)
             },
             closeCamera() {
                 this.$store.commit('closeCamera')
+                this.$message({
+                    type: 'info',
+                    message: '摄像机关闭成功'
+                })
             }
         }
     }
@@ -172,5 +214,8 @@
         text-align: left;
         overflow: auto;
         padding: 12px;
+    }
+    .el-select {
+      width: 90px;
     }
 </style>

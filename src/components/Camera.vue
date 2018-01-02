@@ -8,7 +8,7 @@
                     </h1>
                     <el-row>
                         <el-col :span="24" class="cameraAlign">
-                            <iframe :src="url" id="camera"></iframe>
+                            <iframe :src="urlType + url" id="camera"></iframe>
                         </el-col>
                     </el-row>
                 </el-card>
@@ -37,6 +37,9 @@
             }
         },
         computed: {
+            urlType() {
+                return this.$store.state.cameraType
+            },
             url() {
                 return this.$store.state.cameraAddress
             }

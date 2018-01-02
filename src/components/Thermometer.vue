@@ -64,6 +64,9 @@
         computed: {
             serverIp() {
                 return this.$store.state.serverAddress
+            },
+            serverType() {
+                return this.$store.state.serverType
             }
         },
         mounted() {
@@ -86,13 +89,13 @@
             saveTemperature(num) {
                 var date = new Date(),
                     time = date.getFullYear() + '-' +( 1 + date.getMonth()) + '-' + date.getDate() + '-' + date.getHours() + '/' + date.getMinutes() + '/' + date.getSeconds()
-                return this.$http.post( this.serverIp + api.temperture.saveTemperature,{
+                return this.$http.post(this.serverType + this.serverIp + api.temperture.saveTemperature,{
                     temperature: num,
                     time: time
                 })
             },
             getTemperature(num) {
-                return this.$http.get( this.serverIp + api.temperture.getTemperature,{
+                return this.$http.get(this.serverType + this.serverIp + api.temperture.getTemperature,{
                     params: {
                         total: num
                     }
