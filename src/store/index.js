@@ -9,9 +9,14 @@ const store = new vuex.Store({
         socketAddress: localStorage.getItem('socketAddress') || '192.168.17.149:3000',
         socketType: localStorage.getItem('socketType') || 'http://',
         cameraAddress: localStorage.getItem('cameraAddress') || '192.168.17.149:8080/?action=stream',
-        cameraType: localStorage.getItem('cameraType') || 'http://'
+        cameraType: localStorage.getItem('cameraType') || 'http://',
+        currRouteName: localStorage.getItem('currRouteName') || 'integration'
     },
     mutations: {
+        saveRouteName(state,arg) {
+            state.currRouteName = arg
+            localStorage.setItem('currRouteName',arg)
+        },
         changeSocket(state,arg) {
             state.socketAddress = arg
             localStorage.setItem('socketAddress',arg)

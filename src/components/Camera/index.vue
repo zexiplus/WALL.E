@@ -31,9 +31,12 @@
 <script>
     export default {
         name: 'camera',
+        props: {
+
+        },
         data() {
             return {
-                rotateAngle: 90,
+                rotateAngle: 90
             }
         },
         computed: {
@@ -63,7 +66,7 @@
 
     }
 </script>
-<style>
+<style scoped>
     #camera {
         width: 640px;
         height: 480px;
