@@ -99,6 +99,10 @@
         },
         data() {
             return {
+                left: false,
+                right: false,
+                forward: false,
+                back:false,
                 speedLeft: 100,
                 speedRight: 100,
                 remoteMode: true,
@@ -162,31 +166,42 @@
                 this.currDirection = ''
             },
             captureKeyPress(e) {
-                console.log('emit')
                 switch(e.keyCode) {
                     case 37:
                     if(this.fullControl) {
                         this.setHeighLight('left')
                     }
-                    this.driveMoto('left')
+                    if(!this.left) {
+                        this.driveMoto('left')
+                    }
+                    this.left = true
                     break;
                     case 38:
                     if(this.fullControl) {
                         this.setHeighLight('forward')
                     }
-                    this.driveMoto('forward')
+                    if(!this.forward) {
+                        this.driveMoto('forward')
+                    }
+                    this.forward = true
                     break;
                     case 39:
                     if(this.fullControl) {
                         this.setHeighLight('right')
                     }
-                    this.driveMoto('right')
+                    if(!this.right) {
+                        this.driveMoto('right')
+                    }
+                    this.right = true
                     break;
                     case 40:
                     if(this.fullControl) {
                         this.setHeighLight('back')
                     }
-                    this.driveMoto('back')
+                    if(!this.back) {
+                        this.driveMoto('back')
+                    }
+                    this.back = true
                     break;
                 }
             },
@@ -197,23 +212,27 @@
                         this.removeHeithLight('left')
                     }
                     this.stopMoto('left')
+                    this.left = false
                     break;
                     case 38:
                     if(this.fullControl) {
                         this.removeHeithLight('forward')
                     }
+                    this.forward = false
                     this.stopMoto('forward')
                     break;
                     case 39:
                     if(this.fullControl) {
                         this.removeHeithLight('right')
                     }
+                    this.right = false
                     this.stopMoto('right')
                     break;
                     case 40:
                     if(this.fullControl) {
                         this.removeHeithLight('back')
                     }
+                    this.back = false
                     this.stopMoto('back')
                     break;
                 }

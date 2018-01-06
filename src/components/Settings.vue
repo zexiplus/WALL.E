@@ -103,7 +103,7 @@
         watch: {
         },
         computed: {
-            ...mapState(['serverAddress','socketAddress','cameraAddress','serverType','socketType','cameraType'])
+            ...mapState(['serverAddress','socketAddress','cameraAddress'])
         },
         data() {
             return {
@@ -116,18 +116,18 @@
             }
         },
         mounted() {
-            this.serverAddr = this.serverAddress
-            this.socketAddr = this.socketAddress
-            this.cameraAddr = this.cameraAddress
-            this.serverT = this.serverType
-            this.socketT = this.socketType
-            this.cameraT = this.cameraType
+            this.serverAddr = this.serverAddress[1]
+            this.socketAddr = this.socketAddress[1]
+            this.cameraAddr = this.cameraAddress[1]
+            this.serverT = this.serverAddress[0]
+            this.socketT = this.socketAddress[0]
+            this.cameraT = this.cameraAddress[0]
         },
         methods: {
             connectSocket() {
                 this.saveSocket()
                 if(!this.$socket) {
-                    Vue.use(VueSocketio,this.socketType + this.socketAddr)
+                    Vue.use(VueSocketio,this.socketAddress.join(''))
                     this.$message({
                         type: 'success',
                         message: 'socket信道连接成功'
@@ -137,7 +137,7 @@
                     if(this.$socket.connected) {
                         this.$socket.close()
                     }
-                    this.$socket.connect(this.socketType + this.socketAddr)
+                    this.$socket.connect(this.socketAddress.join(''))
                     this.$message({
                         type: 'success',
                         message: 'socket信道连接成功'
@@ -163,34 +163,46 @@
                 }
             },
             saveSocket() {
-                this.$store.commit('changeSocket',this.socketAddr)
-                this.$store.commit('changeSocketType',this.socketT)
+                if(this.socketT == 'ngrok') {
+                    this.$store.commit('changeSocket',['http://',this.socketAddr + '.ngrok.io'])
+                }
+                else {
+                    this.$store.commit('changeSocket',[this.socketT,this.socketAddr])
+                }
             },
             connectServer() {
-                this.$store.commit('changeServer',this.serverAddr)
-                this.$store.commit('changeServerType',this.serverT)
+                if(this.serverT == 'ngrok') {
+                    this.$store.commit('changeServer',['http://',this.serverAddr + '.ngrok.io'])
+                }
+                else {
+                    this.$store.commit('changeServer',[this.serverT,this.serverAddr])
+                }
                 this.$message({
                     type: 'success',
                     message: '服务器连接成功'
                 })
             },
             closeServer() {
-                this.$store.commit('closeServer')
+                this.$store.commit('changeCamera',[this.cameraT,''])
                 this.$message({
                     type: 'info',
                     message: '服务器关闭成功'
                 })
             },
             connectCamera() {
+                if(this.cameraT == 'ngrok') {
+                    this.$store.commit('changeCamera',['http://',this.cameraAddr + '.ngrok.io'])
+                }
+                else {
+                    this.$store.commit('changeCamera',[this.cameraT,this.cameraAddr])
+                }
                 this.$message({
                     type: 'success',
                     message: '摄像机连接成功'
                 })
-                this.$store.commit('changeCamera',this.cameraAddr)
-                this.$store.commit('changeCameraType',this.cameraT)
             },
             closeCamera() {
-                this.$store.commit('closeCamera')
+                this.$store.commit('changeCamera',[this.cameraT,''])
                 this.$message({
                     type: 'info',
                     message: '摄像机关闭成功'

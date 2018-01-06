@@ -8,7 +8,7 @@
                     </h1>
                     <el-row>
                         <el-col :span="24" class="cameraAlign">
-                            <iframe :src="urlType + url" id="camera"></iframe>
+                            <iframe :src="url" id="camera"></iframe>
                         </el-col>
                     </el-row>
                     <el-row v-if="!fullCamera">
@@ -18,14 +18,14 @@
                     </el-row>
                 </el-card>
             </el-col>
-            <el-col :span="6" v-if="fullCamera">
+            <el-col :span="10" v-if="fullCamera">
                 <el-card>
                     <h1 slot="header" class="textAlign">
                         旋转相机
                     </h1>
                     <el-row>
                         <el-col :span="24">
-                            <el-slider v-model="rotateAngle" :min="0" :max="180"></el-slider>
+                            <el-slider v-model="rotateAngle" :min="0" :max="180" :show-input="true" :debounce="300"></el-slider>
                         </el-col>
                     </el-row>
                 </el-card>
@@ -49,11 +49,8 @@
             }
         },
         computed: {
-            urlType() {
-                return this.$store.state.cameraType
-            },
             url() {
-                return this.$store.state.cameraAddress
+                return this.$store.state.cameraAddress.join('') + '/?action=stream'
             }
         },
         watch: {
