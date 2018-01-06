@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "board": "sudo node server/index.js",
+    "remoteBoard": "sudo node server/index.js 1",
     "dev": "node build/dev-server.js",
     "start": "sudo node build/dev-server.js ras",
     "build": "node build/build.js",

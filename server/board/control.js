@@ -17,10 +17,10 @@ var control = {
 	    this.setHigh([0,1,0,1])
 	    break;
 	    case 'left':
-	    this.setHigh([1,0,0,1])
+	    this.setHigh([0,1,1,0])
 	    break;
 	    case 'right':
-	    this.setHigh([0,1,1,0])
+	    this.setHigh([1,0,0,1])
 	    break;
 	}
     },
