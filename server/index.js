@@ -24,6 +24,7 @@ console.log('websocket listen at 3000 port')
 var app = express() 
 var server = http.createServer(app)
 var io = socket(server)
+server.on('error',function() {console.log('something error')})
 
 app.use(logger('dev'))
 app.use(bodyParser.json())
