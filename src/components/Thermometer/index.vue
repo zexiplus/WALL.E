@@ -85,7 +85,7 @@
             },
             saveTemperature(num) {
                 var date = new Date(),
-                    time = date.getFullYear() + '-' +( 1 + date.getMonth()) + '-' + date.getDate() + '-' + date.getHours() + '/' + date.getMinutes() + '/' + date.getSeconds()
+                    time = date.getFullYear() + '-' +( 1 + date.getMonth()) + '-' + date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
                 return this.$http.post(this.serverIp + api.temperture.saveTemperature,{
                     temperature: num,
                     time: time
@@ -97,13 +97,13 @@
                         total: num
                     }
                 }).then(res => {
-                    var arr = res.body.map(item => JSON.parse(item)),
+                    var arr = res.body,
                         labels = [],
                         values = [];
                     console.log(arr)
                     arr.forEach(item => {
-                        labels.push(item.label)
-                        values.push(item.val)
+                        labels.push(item.time)
+                        values.push(item.temValue)
                     })
                     this.tempLabels = labels
                     this.tempData = values
