@@ -89,6 +89,7 @@
     </div>
 </template>
 <script>
+    let isTrigger = false
     export default {
         name: 'thermometer',
         props: {
@@ -166,6 +167,8 @@
                 this.currDirection = ''
             },
             captureKeyPress(e) {
+                if(isTrigger) return
+                isTrigger = true
                 switch(e.keyCode) {
                     case 37:
                     if(this.fullControl) {
@@ -206,6 +209,7 @@
                 }
             },
             captureKeyUp(e) {
+                isTrigger = false
                 switch(e.keyCode) {
                     case 37:
                     if(this.fullControl) {

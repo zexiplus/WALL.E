@@ -34,6 +34,7 @@
     </div>
 </template>
 <script>
+    let tid
     export default {
         name: 'camera',
         props: {
@@ -54,13 +55,21 @@
             }
         },
         watch: {
-            rotateAngle(newVal) {
-                this.turnCamera(newVal)
+            rotateAngle(newVal, oldVal) {
+                // this.turnCamera(newVal)
+                if(tid) {
+                    clearTimeout(tid)
+                }
+                tid = setTimeout(() => {
+                    this.turnCamera(newVal)
+                },25)
+                
             }
         },
         mounted() {},
         methods: {
             turnCamera(arg) {
+                console.log('turnCamera')
                 this.$socket.emit('turnCamera',arg)
             }
         },

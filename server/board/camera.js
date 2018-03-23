@@ -7,7 +7,7 @@ var servo = {
     instance: new five.Servo({pin:1,startAt:0}),
     init(client) {
         client.on('turnCamera',argv => {
-	   console.log('turn camera')
+	       console.log('turn camera')
            this.instance.to(argv)
         })        
     }
