@@ -6,9 +6,11 @@
   "private": true,
   "scripts": {
     "board": "sudo node server/index.js",
+    "remoteBoard": "sudo node server/index.js 1",
     "dev": "node build/dev-server.js",
     "start": "sudo node build/dev-server.js ras",
     "build": "node build/build.js",
+    "local": "cd dist && hs -p 2999",
     "camera": "/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/mjpg_streamer -i '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/input_uvc.so -d /dev/video0 -n -y -f 25 -r 640x480' -o '/home/pi/software/mjpg-streamer/mjpg-streamer-experimental/output_http.so -n -w /usr/local/www'"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
     "johnny-five": "^0.11.7",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "mongoose": "^4.13.7",
     "morgan": "^1.9.0",
     "raspi-io": "^8.0.1",
     "shelljs": "^0.7.8",

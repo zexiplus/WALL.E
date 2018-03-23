@@ -9,19 +9,19 @@
                     <el-row :gutter="20" type="flex" justify="end">
                         <el-col :span="6" class="alignLeft">
                             <el-input-number v-model="num" size="mini" :min="1" :max="30" label="">
-                                
+
                             </el-input-number>
                         </el-col>
                         <el-col :span="4">
                             <el-button size="mini" round @click="getTemperature(num)">获取温度数据</el-button>
                         </el-col>
-                    </el-row>                    
+                    </el-row>
                     <el-row>
                         <el-col :span="24" class="canvasAlign">
                             <canvas ref="temperatureChart" width="600" height="400"></canvas>
                         </el-col>
                     </el-row>
-                </el-card>                
+                </el-card>
             </el-col>
             <el-col :span="6">
                 <el-card>
@@ -39,17 +39,17 @@
                     <el-row>
                         <el-col :span="8">
                             <el-button size="mini" round @click="updateTemperature">更新温度</el-button>
-                        </el-col>                        
+                        </el-col>
                         <el-col :offset="6" :span="8">
                             <el-button size="mini" round @click="saveTemperature(currTemperature)">存储温度</el-button>
                         </el-col>
-                         
+
                     </el-row>
                 </el-card>
 
             </el-col>
         </el-row>
-    </div>    
+    </div>
 </template>
 <script>
     import {api} from '&c'
@@ -59,6 +59,11 @@
             return {
                 num: 5,
                 currTemperature: 0
+            }
+        },
+        computed: {
+            serverIp() {
+                return this.$store.state.serverAddress.join('')
             }
         },
         mounted() {
@@ -80,25 +85,25 @@
             },
             saveTemperature(num) {
                 var date = new Date(),
-                    time = date.getFullYear() + '-' +( 1 + date.getMonth()) + '-' + date.getDate() + '-' + date.getHours() + '/' + date.getMinutes() + '/' + date.getSeconds()
-                return this.$http.post(api.temperture.saveTemperature,{
+                    time = date.getFullYear() + '-' +( 1 + date.getMonth()) + '-' + date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+                return this.$http.post(this.serverIp + api.temperture.saveTemperature,{
                     temperature: num,
                     time: time
                 })
             },
             getTemperature(num) {
-                return this.$http.get(api.temperture.getTemperature,{
+                return this.$http.get(this.serverIp + api.temperture.getTemperature,{
                     params: {
                         total: num
                     }
                 }).then(res => {
-                    var arr = res.body.map(item => JSON.parse(item)),
+                    var arr = res.body,
                         labels = [],
                         values = [];
                     console.log(arr)
                     arr.forEach(item => {
-                        labels.push(item.label)
-                        values.push(item.val)
+                        labels.push(item.time)
+                        values.push(item.temValue)
                     })
                     this.tempLabels = labels
                     this.tempData = values
@@ -141,8 +146,8 @@
                 ctx.arc(70,340,20,0,2*Math.PI,false)
                 ctx.closePath()
                 ctx.fillStyle = `rgb(${red},${green},0)`
-                ctx.fill()  
-                ctx.closePath();              
+                ctx.fill()
+                ctx.closePath();
 
                 ctx.beginPath()
                 ctx.moveTo(70,340)
@@ -150,7 +155,7 @@
                 ctx.lineWidth = 10
                 ctx.strokeStyle = `rgb(${red},${green},0)`
                 ctx.lineCap = 'round'
-                ctx.stroke()                
+                ctx.stroke()
             },
             drawChart() {
                 var ctx = this.$refs.temperatureChart.getContext('2d')

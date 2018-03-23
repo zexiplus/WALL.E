@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-const page = Object.freeze({
+const page = {
     description: resolve => require(['@c/Description'],resolve),
     home: resolve => require(['@c/Home'],resolve),
     led: resolve => require(['@c/Led'],resolve),
@@ -12,12 +12,12 @@ const page = Object.freeze({
     accelerometer: resolve => require(['@c/Accelerometer'],resolve),
     proximity: resolve => require(['@c/Proximity'],resolve),
     settings: resolve => require(['@c/Settings'],resolve),
-    integration: resolve => require(['@c/Integration'],resolve),
+    intergration: resolve => require(['@c/Intergration'],resolve),
     gps: resolve=> require(['@c/Gps'],resolve)
-})
+}
 
 export default new Router({
-  mode:'history',
+  mode:'hash',
   routes: [
     {path: '/description',name: 'description',component: page.description},
     {path:'/home',name:'home',component:page.home},

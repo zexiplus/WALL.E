@@ -5,7 +5,9 @@
          <el-row>
            <el-col :span="24">
             <el-menu
-              default-active="description"
+              @select="handleMenuSelect"
+              :default-active="currRouteName"
+              :default-opens="currRouteName"
               class="el-menu-vertical-demo"
               background-color="#545c64"
               text-color="#fff"
@@ -14,11 +16,11 @@
               <el-menu-item index="description">
                 <i class="el-icon-document"></i>
                 <span >介绍</span>
-              </el-menu-item>    
-              <el-menu-item index="integration">
+              </el-menu-item>
+              <el-menu-item index="intergration">
                 <i class="el-icon-more"></i>
                 <span >集合</span>
-              </el-menu-item>                        
+              </el-menu-item>
               <el-submenu index="3">
                 <template slot="title">
                   <i class="el-icon-menu"></i>
@@ -55,20 +57,25 @@ export default {
 
     },
     computed: {
-        routerList() {
-            return this.$store.state.routerList
+        currRouteName() {
+            return this.$store.state.currRouteName
         }
     },
     data() {
         return {
-
+            defaultOpens: [3]
+        }
+    },
+    methods: {
+        handleMenuSelect(index) {
+            this.$store.commit('saveRouteName',index)
         }
     },
     directives: {
 
     },
     mounted() {
-        this.$router.push({name:'description'})
+        this.$router.push({name:this.currRouteName})
     }
 }
 </script>
@@ -87,7 +94,7 @@ export default {
     text-align: center;
     line-height: 200px;
   }
-  
+
   .el-main {
     background-color: #E9EEF3;
     color: #333;

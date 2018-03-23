@@ -1,11 +1,11 @@
 <template>
    <div class="controlContainer">
         <el-row :gutter="50">
-            <el-col :span="16">
+            <el-col :span=" fullControl ? 16 : 24">
                 <el-card>
-                    <h1 slot="header" class="textAlign">
+                    <h1 v-if="fullControl" slot="header" class="textAlign">
                         方向遥控
-                    </h1>                    
+                    </h1>
                     <el-form>
                     <el-row>
                         <el-col :span="21" class="canvasAlign">
@@ -20,13 +20,13 @@
                                 <el-slider v-model="speedRight" :min="0" :max="100"></el-slider>
                             </el-form-item>
                         </el-col>
-                    </el-row>    
+                    </el-row>
                     <el-row>
                         <el-col :span="4" :offset="2" class="canvasAlign">
                             <el-form-item label="遥控" label-width="50px">
                                 <el-switch v-model="remoteMode"></el-switch>
                             </el-form-item>
-                        </el-col>                        
+                        </el-col>
                         <el-col :span="4" class="canvasAlign">
                             <el-form-item label="避障" label-width="50px">
                                 <el-switch v-model="avoidMode"></el-switch>
@@ -36,19 +36,19 @@
                             <el-form-item label="循迹" label-width="50px">
                                 <el-switch v-model="trailMode"></el-switch>
                             </el-form-item>
-                        </el-col>   
+                        </el-col>
                         <el-col :span="4" class="canvasAlign">
                             <el-form-item label="旋转" label-width="50px">
                                 <el-switch v-model="rotateMode"></el-switch>
                             </el-form-item>
-                        </el-col> 
+                        </el-col>
                         <el-col :span="4" class="canvasAlign">
                             <el-form-item label="倒退" label-width="50px">
                                 <el-switch v-model="backMode"></el-switch>
                             </el-form-item>
-                        </el-col>                                                                   
-                    </el-row>      
-                    <el-row>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="fullControl">
                         <el-col :span="10" :offset="0">
                             <div class="box" >
                                 <el-row>
@@ -65,15 +65,15 @@
                                     </el-col>
                                     <el-col :span="4" :offset="1">
                                         <i ref="right" class="el-icon-caret-right"></i>
-                                    </el-col>                                    
+                                    </el-col>
                                 </el-row>
                             </div>
                         </el-col>
-                    </el-row>                                   
+                    </el-row>
                     </el-form>
-                </el-card> 
+                </el-card>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="6" v-if="fullControl">
                 <el-card>
                     <h1 slot="header" class="textAlign">
                         当前方向
@@ -83,16 +83,26 @@
                             <div class="currDirection">{{currDirection}}</div>
                         </el-col>
                     </el-row>
-                </el-card>                
+                </el-card>
             </el-col>
         </el-row>
-    </div>    
+    </div>
 </template>
 <script>
     export default {
         name: 'thermometer',
+        props: {
+            fullControl: {
+                type: Boolean,
+                default: true
+            }
+        },
         data() {
             return {
+                left: false,
+                right: false,
+                forward: false,
+                back:false,
                 speedLeft: 100,
                 speedRight: 100,
                 remoteMode: true,
@@ -116,7 +126,7 @@
             avoidMode(val) {
                 if(val) {
                     this.remoteMode = this.trailMode = this.rotateMode = this.backMode = false
-                }                
+                }
             },
             trailMode(val) {
                 if(val) {
@@ -131,7 +141,7 @@
             backMode(val) {
                 if(val) {
                     this.avoidMode = this.trailMode = this.rotateMode = this.remoteMode = false
-                }                
+                }
             }
         },
         created() {
@@ -140,7 +150,7 @@
         methods: {
             bindControl() {
                 document.addEventListener('keydown',this.captureKeyPress)
-                document.addEventListener('keyup',this.captureKeyUp)                
+                document.addEventListener('keyup',this.captureKeyUp)
             },
             //解绑键盘事件
             removeControl() {
@@ -157,43 +167,75 @@
             },
             captureKeyPress(e) {
                 switch(e.keyCode) {
-                    case 37: 
-                    this.setHeighLight('left')
-                    this.driveMoto('left')
+                    case 37:
+                    if(this.fullControl) {
+                        this.setHeighLight('left')
+                    }
+                    if(!this.left) {
+                        this.driveMoto('left')
+                    }
+                    this.left = true
                     break;
                     case 38:
-                    this.setHeighLight('forward')
-                    this.driveMoto('forward')
+                    if(this.fullControl) {
+                        this.setHeighLight('forward')
+                    }
+                    if(!this.forward) {
+                        this.driveMoto('forward')
+                    }
+                    this.forward = true
                     break;
                     case 39:
-                    this.setHeighLight('right')
-                    this.driveMoto('right')
+                    if(this.fullControl) {
+                        this.setHeighLight('right')
+                    }
+                    if(!this.right) {
+                        this.driveMoto('right')
+                    }
+                    this.right = true
                     break;
                     case 40:
-                    this.setHeighLight('back')
-                    this.driveMoto('back')
+                    if(this.fullControl) {
+                        this.setHeighLight('back')
+                    }
+                    if(!this.back) {
+                        this.driveMoto('back')
+                    }
+                    this.back = true
                     break;
                 }
             },
             captureKeyUp(e) {
                 switch(e.keyCode) {
-                    case 37: 
-                    this.removeHeithLight('left')
+                    case 37:
+                    if(this.fullControl) {
+                        this.removeHeithLight('left')
+                    }
                     this.stopMoto('left')
+                    this.left = false
                     break;
                     case 38:
-                    this.removeHeithLight('forward')
+                    if(this.fullControl) {
+                        this.removeHeithLight('forward')
+                    }
+                    this.forward = false
                     this.stopMoto('forward')
                     break;
                     case 39:
-                    this.removeHeithLight('right')
+                    if(this.fullControl) {
+                        this.removeHeithLight('right')
+                    }
+                    this.right = false
                     this.stopMoto('right')
                     break;
                     case 40:
-                    this.removeHeithLight('back')
+                    if(this.fullControl) {
+                        this.removeHeithLight('back')
+                    }
+                    this.back = false
                     this.stopMoto('back')
                     break;
-                }                
+                }
             },
             setHeighLight(refName) {
                 this.$refs[refName].style.color = '#409EFF'
@@ -201,7 +243,7 @@
             removeHeithLight(refName) {
                 this.$refs[refName].style.color = '#CFD3DB'
             }
-        }        
+        }
     }
 </script>
 <style scoped>

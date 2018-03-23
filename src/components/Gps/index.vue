@@ -1,15 +1,15 @@
 <template>
-   <div class="cameraContainer">
+   <div>
         <el-row :gutter="50">
-            <el-col :span="16">
-                <el-card>
-                    <h1 slot="header" class="textAlign">
+            <el-col :span=" fullGps ? 16 : 24">
+                <el-card :body-style="{padding:'5px'}">
+                    <h1 v-if="fullGps" slot="header" class="textAlign">
                         导航图
                     </h1>
-                    <div id="map"></div>
-                </el-card>                
+                    <div id="map" :style=" fullGps ? '' : 'height:400px'"></div>
+                </el-card>
             </el-col>
-            <el-col :span="6">
+            <el-col v-if="fullGps" :span="6">
                 <el-card>
                     <h1 slot="header">
                         当前坐标
@@ -17,7 +17,7 @@
                     <el-row>
                        <el-col :span="10">
                            当前经度
-                       </el-col>                    
+                       </el-col>
                        <el-col :span="10">
                            {{currLng}}
                        </el-col>
@@ -25,23 +25,29 @@
                     <el-row>
                        <el-col :span="10">
                            当前维度
-                       </el-col>                    
+                       </el-col>
                        <el-col :span="10">
                            {{currLat}}
                        </el-col>
-                    </el-row>                    
-                </el-card>                
+                    </el-row>
+                </el-card>
             </el-col>
         </el-row>
-    </div>    
+    </div>
 </template>
 <script>
     export default {
-        name: 'thermometer',
+        name: 'gps',
         data() {
             return {
                 currLng: 0,
                 currLat: 0
+            }
+        },
+        props: {
+            fullGps: {
+                type: Boolean,
+                default: true
             }
         },
         mounted() {
@@ -67,7 +73,7 @@
                     }
                     else {
                         alert('failed'+this.getStatus());
-                    }        
+                    }
                 },{enableHighAccuracy: true})
                 //关于状态码
                 //BMAP_STATUS_SUCCESS   检索成功。对应数值“0”。
