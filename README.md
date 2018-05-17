@@ -112,7 +112,7 @@ mpu6050传感器SCL接树莓派开发板  3引脚，SDA接  2引脚
 
 ![温度模块](./static/tem.gif)
 
-![视频模块](./static/camTurn.gif)
+![视频模块](./static/camTurn2.gif)
 
 
 ![实物展示1](https://raw.githubusercontent.com/zexiplus/WALL.E/master/static/seven.jpg)
