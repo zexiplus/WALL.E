@@ -114,7 +114,7 @@ mpu6050传感器SCL接树莓派开发板  3引脚，SDA接  2引脚
 
 ![视频模块](https://github.com/zexiplus/WALL.E/blob/master/static/camTurn2.gif?raw=true)
 
-![control](./static/run.gif)
+![control](https://github.com/zexiplus/WALL.E/blob/master/static/run3.gif?raw=true)
 
 
 ![实物展示1](https://raw.githubusercontent.com/zexiplus/WALL.E/master/static/seven.jpg)
