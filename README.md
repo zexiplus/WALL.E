@@ -82,7 +82,7 @@ npm run board
 
 接线参考图如下
 
-![接线图例](./static/line.png)
+![接线图例](https://github.com/zexiplus/WALL.E/blob/master/static/line.png)
 
 目前接入电路的模块有电机驱动模块，mpu6050集成模块，servo伺服电机模块，摄像头模块。
 
@@ -96,7 +96,7 @@ mpu6050模块可以感知周边温度，测量加速度等。
 
 本项目树莓派io引脚采用wiringPi编码，如图
 
-![raspi引脚图](./static/pinDefine.png)
+![raspi引脚图](https://github.com/zexiplus/WALL.E/blob/master/static/pinDefine.png)
 
 接线描述：
 
@@ -110,9 +110,9 @@ mpu6050传感器SCL接树莓派开发板  3引脚，SDA接  2引脚
 
 [web控制页面](http://jsrobot.herokuapp.com)
 
-![温度模块](./static/tem.gif)
+![温度模块](https://github.com/zexiplus/WALL.E/blob/master/static/tem.gif?raw=true)
 
-![视频模块](./static/camTurn2.gif)
+![视频模块](https://github.com/zexiplus/WALL.E/blob/master/static/camTurn2.gif?raw=true)
 
 
 ![实物展示1](https://raw.githubusercontent.com/zexiplus/WALL.E/master/static/seven.jpg)
