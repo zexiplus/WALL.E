@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "chart.js": "^2.7.1",
+    "chart.js": "^2.9.4",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "css-loader": "^0.28.7",
