@@ -22,7 +22,7 @@
     "element-ui": "^2.0.3",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.16.2",
-    "johnny-five": "^0.11.7",
+    "johnny-five": "^2.1.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "mongoose": "^4.13.7",
@@ -34,7 +34,7 @@
     "vue": "^2.5.3",
     "vue-resource": "^1.3.4",
     "vue-router": "^2.8.1",
-    "vue-socket.io": "^2.1.1-a",
+    "vue-socket.io": "^3.0.10",
     "vuex": "^2.5.0"
   },
   "devDependencies": {
